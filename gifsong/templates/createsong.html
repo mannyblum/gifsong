@@ -1,21 +1,118 @@
 {% extends "base.html" %}
 
 {% block css_override_block %}
+    <script src="{{ STATIC_URL }}js/jquery.steps.min.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.steps.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/createsong.css">
 {% endblock %}
 
 {% block container %}
-    <a href="/show">view random song</a>
+
+<a href="/show">view random song</a>
     <h1>Gif Song</h1>
-    <p>create a new gif song</p>
-    <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input class="yui3-button success" type="submit" value="Submit" />
-    </form>
-    <p>
-        add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
-    </p>
-    <p>
-        add images with urls like i.imgur.com/SVwaAwZ.gif
-    </p>
+<form action="/" method="post">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+
+
+
+
+<div id="wizard">
+                <h2>Image</h2>
+                <section>
+                    <div class="fieldWrapper">
+                        {{ form.image_url.errors }}
+                        <label for="id_subject">URL to Image</label>
+                        {{ form.image_url }}
+                    </div>
+                    <p>
+                        add images with urls like i.imgur.com/SVwaAwZ.gif
+                    </p>
+                </section>
+
+                <h2>Song</h2>
+                <section>
+                    <div class="fieldWrapper">
+                        {{ form.audio_url.errors }}
+                        <label for="id_message">URL to Audio</label>
+                        {{ form.audio_url }}
+                    </div>
+                    <p>
+                        add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
+                    </p>
+                </section>
+    
+                <h2>Create</h2>
+                <section>
+   <input id="submitgifvid" class="yui3-button success" type="submit" value="Create" />
+   
+                </section>
+            </div>
+</form>
+
+    <script>
+    $(function(){
+        $("#wizard").steps({
+            headerTag: "h2",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            height:"300"
+        });
+        
+        $("#id_image_url").after(
+            $("<div/>", {
+                "id" : "checkImage",
+                "src" : $("#id_image_url").val(),
+                "class" : "yui3-button fa fa-eye notice marginTop",
+                "text" : " preview"
+            })
+        );
+        $("#checkImage").click(function(){
+            $("#previewImage").remove();
+            $("#id_image_url").before(
+                
+                $("<img/>", {
+                    "id" : "previewImage",
+                    "class" : "previewImage",
+                    "src" : "http://" + $("#id_image_url").val()
+                })
+            );
+        });
+        
+        $("#id_audio_url").after(
+            $("<div/>", {
+                "id" : "checkSong",
+                "src" : $("#id_image_url").val(),
+                "class" : "yui3-button fa fa-volume-up notice marginTop",
+                "text" : " preview"
+            })
+        );
+        $("#checkSong").click(function(){
+            $("#previewSong").remove();
+            $("#id_audio_url").before(
+                $("<iframe/>", {
+                    "id" : "previewSong",
+                    "class" : "previewImage",
+                    "frameborder": "0",
+                    "src" : "http://" + $("#id_audio_url").val()
+                })
+            );
+        });
+
+
+    });
+    </script>
+<div class="footer">
+    <div class="doges">
+        <div class="copyright">Brought to you by these Doges.</div>
+        <a class="circular derek"  href="https://github.com/toxigenicpoem" target="_blank"></a>
+        <a class="circular derick"  href="https://github.com/ZephyrXero" target="_blank"></a>
+        <a class="circular burns"  href="https://github.com/nthdegreeburns" target="_blank"></a>
+        <a class="circular justin"  href="https://github.com/bigjust" target="_blank"></a>
+        <a class="circular mannyu"  href="https://github.com/mannyblum" target="_blank"></a>
+        <a class="circular matt" href="https://github.com/mlsimpson" target="_blank"></a>
+        <div class="clearfix"></div>
+        <div class="copyright">Copyright &copy; 2014 Nintendoges</div>
+    </div>
+</div>
 {% endblock %}

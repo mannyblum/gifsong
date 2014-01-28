@@ -28,3 +28,38 @@ input[type="text"] {
     background-color: #57A957;
     color: white;
 }
+
+.notice {
+    background-color: #1B7AE0;
+    color: white;
+}
+
+#submitgifvid {
+    font-size: 1.3em;   
+}
+
+.marginTop {
+    margin-top:5px;   
+}
+
+.previewImage {
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.clearfix {
+    clear:both;   
+}
+
+#youtube {
+display: block;
+height: 200px;
+width: 200px;
+position: absolute;
+right: 0;
+bottom: 0;
+opacity: .7;
+z-index: 999999;
+}
